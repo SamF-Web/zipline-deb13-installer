@@ -1,0 +1,44 @@
+Zipline Setup Manual for Debian 13 VPS
+
+1. Prerequisites:
+   - Fresh Debian 13 VPS with root or sudo access
+   - Internet connection
+   - At least 2GB RAM recommended
+
+2. Running the Script:
+   - wget or curl the setup-zipline.sh
+   - chmod +x setup-zipline.sh
+   - sudo ./setup-zipline.sh
+
+3. What the Script Does:
+   - apt update && apt upgrade
+   - Installs Docker from official repo
+   - Creates /opt/zipline
+   - Downloads docker-compose.yml
+   - Generates secure .env with passwords/secrets
+   - Starts PostgreSQL + Zipline containers
+
+4. Post-Setup:
+   - Open http://YOUR_IP:3000 in browser
+   - Complete initial admin setup wizard
+   - Configure uploads, themes, etc. via dashboard
+
+5. Common Commands (run in /opt/zipline):
+   - docker compose ps          # Status
+   - docker compose logs -f     # Live logs
+   - docker compose down        # Stop
+   - docker compose up -d       # Start
+   - docker compose pull        # Update images
+
+6. Security Recommendations:
+   - Set up firewall (ufw allow 22,3000 or use reverse proxy)
+   - Enable UFW: ufw enable
+   - Consider reverse proxy (Nginx) + SSL (Certbot)
+   - Backup /opt/zipline/uploads and volumes
+
+7. Troubleshooting:
+   - Check docker compose logs
+   - Verify port 3000 is open
+   - Ensure .env has secrets
+
+Official Documentation: https://zipline.diced.sh
