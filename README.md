@@ -12,15 +12,15 @@ This repository contains a bash script to quickly set up Zipline (self-hosted fi
 ## Quick Start
 1. Download the script:
    ```bash
-   curl -LO https://raw.githubusercontent.com/SamF-Web/zipline-deb13-installer/refs/heads/main/zip-install.sh  # Or copy from artifacts
+   curl -LO https://raw.githubusercontent.com/SamF-Web/zipline-deb13-installer/refs/heads/main/zip-install.sh
    ```
 2. Make executable:
    ```bash
-   chmod +x setup-zipline.sh
+   chmod +x zip-install.sh
    ```
 3. Run:
    ```bash
-   sudo ./setup-zipline.sh
+   sudo ./zip-install.sh
    ```
 
 ## Files
