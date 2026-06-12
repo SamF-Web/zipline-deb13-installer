@@ -1,44 +1,31 @@
-Zipline Setup Manual for Debian 13 VPS
+Docker Install
+1. Update + Deps
+sudo apt update
+sudo apt install ca-certificates curl gnupg
+2. run this whole block at once
+sudo install -m 0755 -d /etc/apt/keyrings
+curl -fsSL https://download.docker.com/linux/debian/gpg | sudo tee /etc/apt/keyrings/docker.asc > /dev/null
+sudo chmod a+r /etc/apt/keyrings/docker.asc
+3. run this whole block at once also
+echo \
+  "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.asc] https://download.docker.com/linux/debian \
+  $(. /etc/os-release && echo $VERSION_CODENAME) stable" | \
+  sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
+4. update + install
+sudo apt update
+sudo apt install docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
+5. enable docker
+sudo systemctl enable docker
 
-1. Prerequisites:
-   - Fresh Debian 13 VPS with root or sudo access
-   - Internet connection
-   - At least 2GB RAM recommended
 
-2. Running the Script:
-   - wget or curl the setup-zipline.sh
-   - chmod +x setup-zipline.sh
-   - sudo ./setup-zipline.sh
+Zipline Install
+1. grab script
+curl -LO https://zipline.diced.sh/docker-compose.yml
+2. run these at once
+echo "POSTGRESQL_PASSWORD=$(openssl rand -base64 42 | tr -dc A-Za-z0-9 | cut -c -32 | tr -d '\n')" > .env
+echo "CORE_SECRET=$(openssl rand -base64 42 | tr -dc A-Za-z0-9 | cut -c -32 | tr -d '\n')" >> .env
+3. run this as 1 also
+docker compose pull
+docker compose up -d
 
-3. What the Script Does:
-   - apt update && apt upgrade
-   - Installs Docker from official repo
-   - Creates /opt/zipline
-   - Downloads docker-compose.yml
-   - Generates secure .env with passwords/secrets
-   - Starts PostgreSQL + Zipline containers
-
-4. Post-Setup:
-   - Open http://YOUR_IP:3000 in browser
-   - Complete initial admin setup wizard
-   - Configure uploads, themes, etc. via dashboard
-
-5. Common Commands (run in /opt/zipline):
-   - docker compose ps          # Status
-   - docker compose logs -f     # Live logs
-   - docker compose down        # Stop
-   - docker compose up -d       # Start
-   - docker compose pull        # Update images
-
-6. Security Recommendations:
-   - Set up firewall (ufw allow 22,3000 or use reverse proxy)
-   - Enable UFW: ufw enable
-   - Consider reverse proxy (Nginx) + SSL (Certbot)
-   - Backup /opt/zipline/uploads and volumes
-
-7. Troubleshooting:
-   - Check docker compose logs
-   - Verify port 3000 is open
-   - Ensure .env has secrets
-
-Official Documentation: https://zipline.diced.sh
+goto VPSIP:3000 and do first acc setup
